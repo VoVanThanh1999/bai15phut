@@ -73,5 +73,9 @@ public class BaoVe {
 	public BaoVe() {
 		super();
 	}
+	public Object get() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
