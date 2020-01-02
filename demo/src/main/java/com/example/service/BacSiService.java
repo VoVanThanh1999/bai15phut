@@ -18,24 +18,35 @@ public class BacSiService {
 		return bacSiRepository.findAll();
 	}
 	
-	public void add(BacSi bacSi) {
-		bacSiRepository.save(bacSi);
-	}
+
 	
 	public void delete(int id) {
 		bacSiRepository.deleteById(id);
 	}
 	
-	public void edit(BacSi bacSi) {
-		Optional<BacSi> bacSi2 = bacSiRepository.findById(bacSi.getMaBacSi());
-		bacSi2.get().setDiaChi(bacSi.getDiaChi());
-		bacSi2.get().setEmail(bacSi.getEmail());
-		bacSi2.get().setLuong(bacSi.getLuong());
-		bacSi2.get().setMaBacSi(bacSi.getMaBacSi());
-		bacSi2.get().setPhone(bacSi.getPhone());
-		bacSi2.get().setTenBacSi(bacSi.getTenBacSi());
-		bacSi2.get().setTuoiBacSi(bacSi.getTuoiBacSi());
-		
-		bacSiRepository.save(bacSi2.get());
+	public void save(BacSi bacSiDto) {
+		BacSi bacSi = new BacSi();
+		bacSi.setDiaChi(bacSiDto.getDiaChi());
+		bacSi.setEmail(bacSiDto.getEmail());
+		bacSi.setLuong(bacSiDto.getLuong());
+		bacSi.setMaBacSi(bacSiDto.getMaBacSi());
+		bacSi.setPhone(bacSiDto.getPhone());
+		bacSi.setTenBacSi(bacSiDto.getTenBacSi());
+		bacSi.setTuoiBacSi(bacSiDto.getTuoiBacSi());
+		bacSiRepository.save(bacSi);
+
+	}
+	public void edit(BacSi bacSiDto) {
+		Optional<BacSi> optional = bacSiRepository.findById(bacSiDto.getMaBacSi());
+		if (optional.get() != null) {
+			optional.get().setDiaChi(bacSiDto.getDiaChi());
+			optional.get().setEmail(bacSiDto.getEmail());
+			optional.get().setLuong(bacSiDto.getLuong());
+			optional.get().setMaBacSi(bacSiDto.getMaBacSi());
+			optional.get().setPhone(bacSiDto.getPhone());
+			optional.get().setTenBacSi(bacSiDto.getTenBacSi());
+			optional.get().setTuoiBacSi(bacSiDto.getTuoiBacSi());
+			bacSiRepository.save(optional.get());
+		}
 	}
 }
