@@ -11,7 +11,7 @@ import com.example.model.BaoVe;
 
 @Repository
 
-public interface BaoVeRepostiroy extends JpaRepository<BaoVe, InternalError>{
+public interface BaoVeRepostiroy extends JpaRepository<BaoVe, Integer>{
 	/*
 	 * @Query(value =
 	 * "SELECT u FROM u where u.tenBaoVe =: tenBaoVe and u.diaChi = :diaChi"
