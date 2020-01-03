@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Thông tin Sinh viên</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<style>
+    table, th, td {
+      border: 1px solid black;
+  }
+  th{
+    text-align: center;
+}
+button{
+    border: none;
+    color: whitesmoke;
+    text-transform: capitalize;
+    font-weight: bold;
+    padding: 4px 8px;
+}
+</style>
+<body>
+
+
+    <div class="container mt-3">
+        <h1 class="text-uppercase mb-4 text-danger text-center">Thông tin</h1>
+        <table style="width:100%" class="mt-3 text-center">
+            <thead>
+                <tr>
+                    <th>Mã Sinh viên</th>
+                    <th>Địa Chỉ</th>
+                    <th>Ngày Sinh</th>
+                    <th>Tên Sinh viên</th>
+                </tr>
+
+            </thead>
+            <tbody id="show">
+            </tbody>
+        </table>
+        <br>
+        <label class="text-capitalize mr-5 font-weight-bold">Tên Sinh Viên:</label>
+        <input type="text" id="tensv" class="mr-4">
+        <label class="text-capitalize mr-5 font-weight-bold">Địa Chỉ:</label>
+        <input type="text" id="diachi" class="mr-4">
+        <button id="gettx" class="bg-primary"> Search</button>
+        <br>    
+    </div>
+
+
+    <script>
+        var request = new XMLHttpRequest()
+        let load = ''
+        var show = document.getElementById("sho w");
+        request.open('GET', 'http://localhost:8080/api/getAll', true)
+        request.onload = function () {
+            var data = JSON.parse(this.response)
+            console.log(data);
+            let load = ''
+            if (request.status >= 200 && request.status < 400) {
+                data.forEach(check => {
+                    load += `<tr><th>${check.masinvien}</th>
+                    <th>${check.diachi}</th>
+                    <th> ${check.ngaysinh}</th>
+                    <th> ${check.tensv}</th>
+                    </tr>`
+                })
+            } else {
+                console.log('error')
+            }
+            show.innerHTML = load;
+        }
+        request.send()
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+
+            $("#gettx").click(function () {
+                var show = document.getElementById("show");
+                $.ajax({ url: "http://localhost:8080/api/search?tensv=" + $("#tensv").val()+"&diachi=" +$("#diachi").val()},true)
+                .then(function (data) {
+                   for (let i = 0; i < data.length; i++) {
+                    load += `<tr><th>${data[i].masinvien}</th>
+                    <th>${data[i].diachi}</th>
+                    <th> ${data[i].ngaysinh}</th>
+                    <th> ${data[i].tensv}</th>
+                    </tr>`
+                    show.innerHTML = load;
+                }
+
+            });
+            });
+            
+        });
+    </script>
+  
+</body>
+
+</html>
